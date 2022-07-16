@@ -23,12 +23,13 @@ export const TaskListContextProvider = (props) => {
       try {
         const res = await axios.get(`${baseUrl}/users/${loggedUser}/tasklists`);
         setTaskList(res.data);
+        setSelectedTaskList();
       } catch (e) {
         console.log(e);
       }
     };
     loadTaskList();
-  }, [loggedUser, taskList]);
+  }, []);
 
   const newTaskList = async ({ name }) => {
     const response = await postTaskList(loggedUser, { name });
@@ -56,6 +57,7 @@ export const TaskListContextProvider = (props) => {
     );
     const newTaskList = taskList.filter((data) => data.id !== response.id);
     setTaskList(newTaskList);
+    setSelectedTaskList();
   };
 
   return (

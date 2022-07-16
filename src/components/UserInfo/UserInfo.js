@@ -32,6 +32,7 @@ export const UserInfo = () => {
         opacity="80%"
         onClick={() => {
           localStorage.removeItem("token");
+          localStorage.removeItem("userId");
           goToLogin();
         }}
       >

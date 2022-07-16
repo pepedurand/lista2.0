@@ -10,7 +10,8 @@ export const TaskContext = React.createContext();
 
 export const TaskContextProvider = (props) => {
   const [tasks, setTasks] = useState([]); //setar as tasks
-  const { selectedTaskList } = React.useContext(TaskListContext);
+  const { selectedTaskList, setSelectedTaskList } =
+    React.useContext(TaskListContext);
   const { loggedUser } = React.useContext(AuthContext);
   const params = useParams();
 
@@ -28,7 +29,7 @@ export const TaskContextProvider = (props) => {
     const loadTaskList = async () => {
       try {
         const res = await axios.get(
-          `${baseUrl}/users/${loggedUser}/tasklists/${params.taskListId}/tasks`
+          `${baseUrl}/users/${loggedUser}/tasklists/${selectedTaskList.id}/tasks`
         );
         setTasks(res.data);
       } catch (e) {
@@ -36,7 +37,7 @@ export const TaskContextProvider = (props) => {
       }
     };
     loadTaskList();
-  }, [loggedUser, params.taskListId, tasks]);
+  }, [loggedUser, params.taskListId]);
 
   const newTask = async (props) => {
     const response = await postTask(props);

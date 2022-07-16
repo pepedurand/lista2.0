@@ -8,17 +8,17 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PasswordInput } from "../../components/PasswordInput/PasswordInput";
 import { useForm } from "../../hooks/useForm";
 import { useUnprotectedPage } from "../../hooks/useUnprotectedPage";
 import { FormsDiv, FormsBox, ImageDiv } from "../../layouts/styled";
-import { goToLogin } from "../../router/coordinator";
+import { useAppNavigate } from "../../router/coordinator";
 import { signup } from "../../services/signup";
 
 export const SignUp = () => {
   useUnprotectedPage();
-  const navigate = useNavigate();
+  const { goToLogin } = useAppNavigate();
   const { form, onChange, cleanFields } = useForm({
     name: "",
     email: "",
@@ -29,7 +29,7 @@ export const SignUp = () => {
     e.preventDefault();
     signup(form);
     cleanFields();
-    goToLogin(navigate);
+    goToLogin();
   };
 
   return (

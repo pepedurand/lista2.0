@@ -1,12 +1,10 @@
-import { Box, Flex, Grid, Heading } from "@chakra-ui/react";
-import { Sidebar } from "../../components/Sidebar/Sidebar";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import { useProtectedPage } from "../../hooks/useProtectedPage";
 
 export const BlankTask = () => {
   useProtectedPage();
   return (
-    <Grid templateColumns="minmax(auto, 300px) 1fr">
-      <Sidebar />
+    <div>
       <Flex flexFlow="column" alignItems="center" padding="8">
         <Heading fontWeight="thin">Selecione sua lista de tarefas</Heading>
         <Box
@@ -21,6 +19,6 @@ export const BlankTask = () => {
           src="https://embed.lottiefiles.com/animation/8021"
         />
       </Flex>
-    </Grid>
+    </div>
   );
 };

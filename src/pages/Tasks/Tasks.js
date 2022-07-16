@@ -1,5 +1,6 @@
 import { Box, Grid } from "@chakra-ui/react";
 import React from "react";
+import { BlankTask } from "../../components/BlankTask/BlankTask";
 import { CreateTask } from "../../components/CreateTask/CreateTask";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { TaskItem } from "../../components/TaskItem/TaskItem";
@@ -19,10 +20,15 @@ export const Tasks = () => {
     <Grid templateColumns="minmax(auto, 300px) 1fr">
       <Sidebar />
       <Box padding="8">
-        <TaskListTitle />
-        <CreateTask />
-
-        {tasks &&
+        {selectedTaskList !== undefined ? (
+          <div>
+            <TaskListTitle />
+            <CreateTask />
+          </div>
+        ) : (
+          <div></div>
+        )}
+        {selectedTaskList !== undefined ? (
           tasks.map((task) => (
             <TaskItem
               key={task.id}
@@ -37,7 +43,10 @@ export const Tasks = () => {
                 });
               }}
             />
-          ))}
+          ))
+        ) : (
+          <BlankTask />
+        )}
       </Box>
     </Grid>
   );

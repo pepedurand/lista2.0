@@ -12,8 +12,8 @@ export const AuthContextProvider = (props) => {
   const users = useRequestData([], `${baseUrl}/users`);
 
   useEffect(() => {
-    const logUser = async () => {
-      await setLoggedUser(JSON.parse(localStorage.getItem("userId")));
+    const logUser = () => {
+      setLoggedUser(JSON.parse(localStorage.getItem("userId")));
     };
     logUser();
   }, []);

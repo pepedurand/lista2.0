@@ -20,23 +20,3 @@ export const useAppNavigate = () => {
 
   return { goToLogin, goToSignUp, goToTasks, goToSelectedTasksList };
 };
-
-export const goToLogin = (navigate) => {
-  navigate("/");
-};
-
-export const goToSignUp = (navigate) => {
-  navigate("/criar-conta/");
-};
-
-export const goToTasks = (navigate) => {
-  navigate(`/tarefas`);
-};
-
-export const goToSelectedTasksList = ({ navigate, tasklistId }) => {
-  navigate(`/tarefas/${tasklistId}`);
-};
-
-export const goToTaskList = (navigate, userId, tasklistId) => {
-  navigate(`/${userId}/tarefas/${tasklistId}`);
-};
