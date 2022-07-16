@@ -1,14 +1,13 @@
 import { useLayoutEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { goToTasks } from "../router/coordinator";
+import { useAppNavigate } from "../router/coordinator";
 
 export const useUnprotectedPage = () => {
-  const navigate = useNavigate();
+  const { goToTasks } = useAppNavigate();
 
   useLayoutEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      goToTasks(navigate);
+      goToTasks();
     }
-  }, [navigate]);
+  }, [goToTasks]);
 };

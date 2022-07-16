@@ -9,6 +9,7 @@ export const Sidebar = () => {
       <UserInfo />
       <Divider />
       <TaskLists />
+      <Divider />
     </SideBarDiv>
   );
 };

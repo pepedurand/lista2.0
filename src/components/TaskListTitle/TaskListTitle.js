@@ -15,14 +15,12 @@ import { TaskListContext } from "../../context/taskListContext";
 import { useForm } from "../../hooks/useForm";
 
 const TaskListTitle = () => {
-  const { editTaskListTitle } = React.useContext(TaskListContext);
+  const { editTaskListTitle, selectedTaskList, removeTaskList } =
+    React.useContext(TaskListContext);
 
   const { form, onChange } = useForm({
     name: "",
   });
-
-  const { selectedTaskList, removeTaskList } =
-    React.useContext(TaskListContext);
 
   const EditableControls = () => {
     const {
@@ -73,7 +71,7 @@ const TaskListTitle = () => {
       flexDir="row"
       defaultValue={selectedTaskList.name}
       key={selectedTaskList.id}
-      onSubmit={() => editTaskListTitle(form)}
+      onSubmit={() => editTaskListTitle(form.name)}
     >
       <EditablePreview />
       <Input

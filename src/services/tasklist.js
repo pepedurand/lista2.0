@@ -24,11 +24,15 @@ export const deleteTaskList = async (userId, taskList) => {
   }
 };
 
-export const putTaskList = async ({ userId, taskList, name }) => {
+export const updateTaskListTitle = async ({
+  userId,
+  taskList,
+  taskListTitle,
+}) => {
   try {
     const response = await axios.put(
       `${baseUrl}/users/${userId}/tasklists/${taskList}`,
-      name
+      { name: taskListTitle }
     );
     return response.data;
   } catch (e) {

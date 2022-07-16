@@ -1,14 +1,14 @@
 import { ChakraProvider, theme } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
-import { TaskListContextProvider } from "./context/taskListContext";
+import { AuthContextProvider } from "./context/authContext";
 import { Router } from "./router/router";
 
 export const App = () => (
-  <TaskListContextProvider>
-    <ChakraProvider theme={theme}>
-      <BrowserRouter>
+  <ChakraProvider theme={theme}>
+    <BrowserRouter>
+      <AuthContextProvider>
         <Router />
-      </BrowserRouter>
-    </ChakraProvider>
-  </TaskListContextProvider>
+      </AuthContextProvider>
+    </BrowserRouter>
+  </ChakraProvider>
 );

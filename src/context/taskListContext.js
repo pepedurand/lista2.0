@@ -1,45 +1,52 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { baseUrl } from "../constants/baseUrl";
 import {
   deleteTaskList,
   postTaskList,
-  putTaskList,
+  updateTaskListTitle,
 } from "../services/tasklist";
+import { AuthContext } from "./authContext";
 
 export const TaskListContext = React.createContext();
 
 export const TaskListContextProvider = (props) => {
-  const [taskList, setTaskList] = useState([]); //funcionando
-
-  const [selectedTaskList, setSelectedTaskList] = useState(1); //selecionar a lista
-
-  const [tasks, setTasks] = useState(); //setar as tasks
-
-  const [loggedUser, setLoggedUser] = useState();
+  const params = useParams();
+  const [taskList, setTaskList] = useState([]);
+  const [selectedTaskList, setSelectedTaskList] = useState(params.taskListId);
+  const { loggedUser } = React.useContext(AuthContext);
 
   useEffect(() => {
-    axios
-      .get(`${baseUrl}/users/${loggedUser}/tasklists`)
-      .then((res) => setTaskList(res.data))
-      .catch((err) => console.log(err));
-  }, [loggedUser]);
+    if (!taskList) return;
+    const loadTaskList = async () => {
+      try {
+        const res = await axios.get(`${baseUrl}/users/${loggedUser}/tasklists`);
+        setTaskList(res.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    loadTaskList();
+  }, [loggedUser, taskList]);
 
   const newTaskList = async ({ name }) => {
     const response = await postTaskList(loggedUser, { name });
     setTaskList([...taskList, response]);
   };
 
-  const editTaskListTitle = async (name) => {
-    const response = await putTaskList({
+  const editTaskListTitle = async (title) => {
+    const response = await updateTaskListTitle({
       userId: loggedUser,
       taskList: selectedTaskList.id,
-      name: name,
+      taskListTitle: title,
     });
-    const elementIndex = taskList.findIndex((obj) => obj.id === response.id);
-    taskList[elementIndex].name = name.name;
-    console.log(taskList);
-    setTaskList(taskList);
+    const updatedTasklist = [...taskList];
+    const elementIndex = updatedTasklist.findIndex(
+      (obj) => obj.id === response.id
+    );
+    updatedTasklist[elementIndex] = response;
+    setTaskList(updatedTasklist);
   };
 
   const removeTaskList = async () => {
@@ -54,16 +61,12 @@ export const TaskListContextProvider = (props) => {
   return (
     <TaskListContext.Provider
       value={{
-        loggedUser,
         editTaskListTitle,
-        setLoggedUser,
         removeTaskList,
         newTaskList,
         taskList,
         selectedTaskList,
         setSelectedTaskList,
-        tasks,
-        setTasks,
       }}
     >
       {props.children}

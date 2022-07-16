@@ -87,7 +87,7 @@ export const SignUp = () => {
               Cadastrar
             </Button>
           </form>
-          <Link to="/login">Já tem uma conta? Faça o login.</Link>
+          <Link to="">Já tem uma conta? Faça o login.</Link>
         </Box>
       </FormsDiv>
     </FormsBox>

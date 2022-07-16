@@ -1,11 +1,15 @@
 import { CalendarIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { Box, Button, Divider, List, ListItem, Text } from "@chakra-ui/react";
 import React from "react";
+import { AuthContext } from "../../context/authContext";
 import { TaskListContext } from "../../context/taskListContext";
+import { useAppNavigate } from "../../router/coordinator";
 
 export const TaskLists = () => {
-  const { taskList, newTaskList, setSelectedTaskList, loggedUser } =
+  const { taskList, newTaskList, setSelectedTaskList } =
     React.useContext(TaskListContext);
+  const { loggedUser } = React.useContext(AuthContext);
+  const { goToSelectedTasksList } = useAppNavigate();
 
   return (
     <Box padding="4" textColor="gray.700">
@@ -22,6 +26,7 @@ export const TaskLists = () => {
                   width="100%"
                   onClick={() => {
                     setSelectedTaskList(item);
+                    goToSelectedTasksList(item.id);
                   }}
                 >
                   <Text>

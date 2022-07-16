@@ -1,15 +1,16 @@
 import { PlusSquareIcon } from "@chakra-ui/icons";
 import { IconButton, Input } from "@chakra-ui/react";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { AuthContext } from "../../context/authContext";
+import { TaskContext } from "../../context/taskContext";
 import { TaskListContext } from "../../context/taskListContext";
 import { useForm } from "../../hooks/useForm";
-import { postTask } from "../../services/tasks";
 import { CreateTaskInputDiv } from "./styled";
 
 export const CreateTask = () => {
-  const params = useParams();
   const { selectedTaskList } = React.useContext(TaskListContext);
+  const { loggedUser } = React.useContext(AuthContext);
+  const { newTask } = React.useContext(TaskContext);
   const { form, onChange, cleanFields } = useForm({
     task: "",
     done: false,
@@ -17,8 +18,8 @@ export const CreateTask = () => {
 
   const onSubmitTask = (e) => {
     e.preventDefault();
+    newTask({ userId: loggedUser, taskId: selectedTaskList.id, task: form });
     cleanFields();
-    postTask(params.userId, selectedTaskList.id, form);
   };
 
   return (
