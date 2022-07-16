@@ -1,5 +1,5 @@
 import { Box, Grid } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { BlankTask } from "../../components/BlankTask/BlankTask";
 import { CreateTask } from "../../components/CreateTask/CreateTask";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
@@ -12,9 +12,14 @@ import { useProtectedPage } from "../../hooks/useProtectedPage";
 
 export const Tasks = () => {
   useProtectedPage();
-  const { selectedTaskList } = React.useContext(TaskListContext);
+  const { selectedTaskList, setSelectedTaskList } =
+    React.useContext(TaskListContext);
   const { loggedUser } = React.useContext(AuthContext);
   const { tasks, removeTask } = React.useContext(TaskContext);
+
+  useEffect(() => {
+    setSelectedTaskList();
+  }, [setSelectedTaskList]);
 
   return (
     <Grid templateColumns="minmax(auto, 300px) 1fr">

@@ -10,8 +10,7 @@ export const TaskContext = React.createContext();
 
 export const TaskContextProvider = (props) => {
   const [tasks, setTasks] = useState([]); //setar as tasks
-  const { selectedTaskList, setSelectedTaskList } =
-    React.useContext(TaskListContext);
+  const { selectedTaskList } = React.useContext(TaskListContext);
   const { loggedUser } = React.useContext(AuthContext);
   const params = useParams();
 
@@ -26,6 +25,8 @@ export const TaskContextProvider = (props) => {
 
   useEffect(() => {
     if (!tasks) return;
+    if (!loggedUser) return;
+    if (!selectedTaskList) return;
     const loadTaskList = async () => {
       try {
         const res = await axios.get(
