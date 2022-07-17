@@ -18,12 +18,15 @@ export const TaskListContextProvider = (props) => {
   const { loggedUser } = React.useContext(AuthContext);
 
   useEffect(() => {
-    if (!taskList) return;
     const loadTaskList = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/users/${loggedUser}/tasklists`);
+        const res = await axios.get(
+          `${baseUrl}/users/${JSON.parse(
+            localStorage.getItem("userId")
+          )}/tasklists`
+        ); //se colocar logged user, ao atualizar a pagina nao carrega as lists
         setTaskList(res.data);
-        setSelectedTaskList();
+        setSelectedTaskList(params.taskListId);
       } catch (e) {
         console.log(e);
       }

@@ -23,22 +23,24 @@ export const TaskContextProvider = (props) => {
     });
   };
 
+  const loadTasks = async () => {
+    try {
+      const res = await axios.get(
+        `${baseUrl}/users/${JSON.parse(
+          localStorage.getItem("userId")
+        )}/tasklists/${params.taskListId}/tasks`
+      );
+      setTasks(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
-    if (!tasks) return;
-    if (!loggedUser) return;
-    if (!selectedTaskList) return;
-    const loadTaskList = async () => {
-      try {
-        const res = await axios.get(
-          `${baseUrl}/users/${loggedUser}/tasklists/${selectedTaskList.id}/tasks`
-        );
-        setTasks(res.data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    loadTaskList();
-  }, [loggedUser, params.taskListId]);
+    if (selectedTaskList) {
+      loadTasks();
+    }
+  }, [selectedTaskList]);
 
   const newTask = async (props) => {
     const response = await postTask(props);
@@ -59,6 +61,7 @@ export const TaskContextProvider = (props) => {
         newTask,
         removeTask,
         taskStatus,
+        loadTasks,
       }}
     >
       {props.children}

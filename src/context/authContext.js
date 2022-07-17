@@ -12,10 +12,7 @@ export const AuthContextProvider = (props) => {
   const users = useRequestData([], `${baseUrl}/users`);
 
   useEffect(() => {
-    const logUser = () => {
-      setLoggedUser(JSON.parse(localStorage.getItem("userId")));
-    };
-    logUser();
+    setLoggedUser(JSON.parse(localStorage.getItem("userId")));
   }, []);
 
   const login = (credentials) => {
@@ -35,7 +32,7 @@ export const AuthContextProvider = (props) => {
       localStorage.setItem("token", `${credentials.email}`);
       localStorage.setItem("userId", `${userId}`);
       alert("logado");
-      setLoggedUser(userId);
+      setLoggedUser(JSON.parse(localStorage.getItem("userId")));
       goToTasks();
     } else {
       alert("revise seus dados ou crie uma conta");

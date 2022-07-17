@@ -2,6 +2,7 @@ import { CalendarIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { Box, Button, Divider, List, ListItem, Text } from "@chakra-ui/react";
 import React from "react";
 import { AuthContext } from "../../context/authContext";
+import { TaskContext } from "../../context/taskContext";
 import { TaskListContext } from "../../context/taskListContext";
 import { useAppNavigate } from "../../router/coordinator";
 
@@ -9,6 +10,7 @@ export const TaskLists = () => {
   const { taskList, newTaskList, setSelectedTaskList } =
     React.useContext(TaskListContext);
   const { loggedUser } = React.useContext(AuthContext);
+  const { loadTasks } = React.useContext(TaskContext);
   const { goToSelectedTasksList } = useAppNavigate();
 
   return (
@@ -27,6 +29,7 @@ export const TaskLists = () => {
                   onClick={() => {
                     setSelectedTaskList(item);
                     goToSelectedTasksList(item.id);
+                    loadTasks();
                   }}
                 >
                   <Text>

@@ -1,5 +1,6 @@
 import { Box, Grid } from "@chakra-ui/react";
 import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { BlankTask } from "../../components/BlankTask/BlankTask";
 import { CreateTask } from "../../components/CreateTask/CreateTask";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
@@ -16,9 +17,10 @@ export const Tasks = () => {
     React.useContext(TaskListContext);
   const { loggedUser } = React.useContext(AuthContext);
   const { tasks, removeTask } = React.useContext(TaskContext);
+  const params = useParams();
 
   useEffect(() => {
-    setSelectedTaskList();
+    setSelectedTaskList(params.taskListId);
   }, [setSelectedTaskList]);
 
   return (
