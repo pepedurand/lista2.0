@@ -14,7 +14,7 @@ export const TaskListContext = React.createContext();
 export const TaskListContextProvider = (props) => {
   const params = useParams();
   const [taskList, setTaskList] = useState([]);
-  const [selectedTaskList, setSelectedTaskList] = useState(params.taskListId);
+  const [selectedTaskList, setSelectedTaskList] = useState();
   const { loggedUser } = React.useContext(AuthContext);
 
   useEffect(() => {
@@ -24,9 +24,11 @@ export const TaskListContextProvider = (props) => {
           `${baseUrl}/users/${JSON.parse(
             localStorage.getItem("userId")
           )}/tasklists`
-        ); //se colocar logged user, ao atualizar a pagina nao carrega as lists
+        );
         setTaskList(res.data);
-        setSelectedTaskList(params.taskListId);
+        setSelectedTaskList(
+          res.data.find((obj) => obj.id === params.taskListId)
+        );
       } catch (e) {
         console.log(e);
       }
